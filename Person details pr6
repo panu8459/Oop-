@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+struct Person {
+ std::string name;
+ std::string dob; // Date of Birth
+ std::string telephone;
+ bool operator<(const Person& other) const {
+ return name < other.name;
+ }
+};
+struct Item {
+ int itemCode;
+ std::string name;
+ double cost;
+ int quantity;
+ bool operator<(const Item& other) const {
+ return itemCode < other.itemCode;
+ }
+};
+void displayPersons(const std::vector<Person>& persons) {
+ for (const auto& person : persons) {
+ std::cout << "Name: " << person.name 
+ << ", DOB: " << person.dob 
+ << ", Telephone: " << person.telephone << std::endl;
+ }
+}
+void displayItems(const std::vector<Item>& items) {
+ for (const auto& item : items) {
+ std::cout << "Item Code: " << item.itemCode 
+ << ", Name: " << item.name 
+ << ", Cost: " << item.cost 
+ << ", Quantity: " << item.quantity << std::endl;
+ }
+}
+int main() {
+ std::vector<Person> persons = {
+ {"pranita", "2003-10-09", "123-456-7890"},
+ {"abc", "2003-12-15", "987-654-3210"},
+ {"def", "2004-03-30", "555-555-5555"}
+ };
+ std::vector<Item> items = {
+ {101, "Laptop", 79999.99, 10},
+ {102, "Smartphone", 21499.99, 20},
+ {103, "Tablet", 35299.99, 15}
+ };
+ std::sort(persons.begin(), persons.end());
+ std::cout << "Sorted Persons:\n";
+ displayPersons(persons);
+ std::sort(items.begin(), items.end());
+ std::cout << "\nSorted Items:\n";
+ displayItems(items);
+ std::string searchName;
+ std::cout << "\nEnter a name to search for: ";
+ std::getline(std::cin, searchName);
+ auto it = std::find_if(persons.begin(), persons.end(), 
+ [&searchName](const Person& p) { return p.name == searchName; });
+ if (it != persons.end()) {
+ std::cout << "Found: " << it->name << ", DOB: " << it->dob << ", Telephone: " << it-
+>telephone << std::endl;
+ } else {
+ std::cout << "Person not found." << std::endl;
+ }
+ int searchCode;
+ std::cout << "\nEnter an item code to search for: ";
+ std::cin >> searchCode;
+ auto itemIt = std::find_if(items.begin(), items.end(), 
+ [searchCode](const Item& i) { return i.itemCode == searchCode; });
+ if (itemIt != items.end()) {
+ std::cout << "Found: Item Code: " << itemIt->itemCode 
+ << ", Name: " << itemIt->name 
+ << ", Cost: " << itemIt->cost 
+ << ", Quantity: " << itemIt->quantity << std::endl;
+ } else {
+ std::cout << "Item not found." << std::endl;
+ }
+ return 0;
+}
