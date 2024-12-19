@@ -1,0 +1,92 @@
+#include <iostream>
+
+#include <vector>
+
+template <typename T>
+
+void selectionSort(std::vector<T>& arr) {
+
+ int n = arr.size();
+
+ for (int i = 0; i < n - 1; ++i) {
+
+ int minIndex = i;
+
+ for (int j = i + 1; j < n; ++j) {
+
+ if (arr[j] < arr[minIndex]) {
+
+ minIndex = j;
+
+ }
+
+ }
+
+ std::swap(arr[i], arr[minIndex]);
+
+ }
+
+}
+
+template <typename T>
+
+void printArray(const std::vector<T>& arr) {
+
+ for (const auto& element : arr) {
+
+ std::cout << element << " ";
+
+ }
+
+ std::cout << std::endl;
+
+}
+
+int main() {
+
+ int intSize;
+
+ std::cout << "Enter the number of integers: ";
+
+ std::cin >> intSize;
+
+ std::vector<int> intArray(intSize); 
+
+ std::cout << "Enter " << intSize << " integers: ";
+
+ for (int i = 0; i < intSize; ++i) {
+
+ std::cin >> intArray[i];
+
+ }
+
+ selectionSort(intArray);
+
+ std::cout << "Sorted integer array: ";
+
+ printArray(intArray);
+
+ int floatSize;
+
+ std::cout << "Enter the number of floats: ";
+
+ std::cin >> floatSize;
+
+ std::vector<float> floatArray(floatSize); 
+
+ std::cout << "Enter " << floatSize << " floats: ";
+
+ for (int i = 0; i < floatSize; ++i) {
+std::cin >> floatArray[i];
+
+ }
+
+ selectionSort(floatArray);
+
+ std::cout << "Sorted float array: ";
+
+ printArray(floatArray);
+
+ return 0;
+
+}
