@@ -1,0 +1,159 @@
+#include <iostream>
+#include <string>
+#include <stdexcept>
+using namespace std;
+class Student {
+private:
+ string name;
+ int rollNumber;
+ string className;
+ string division;
+ string dateOfBirth;
+ string bloodGroup;
+ string contactAddress;
+ string telephoneNumber;
+ string drivingLicenseNumber;
+public:
+ Student() : name(""), rollNumber(0), className(""), division(""), dateOfBirth(""), 
+bloodGroup(""), contactAddress(""), telephoneNumber(""), drivingLicenseNumber("") {}
+ Student(string name, int rollNumber, string className, string division, string dateOfBirth, 
+string bloodGroup, string contactAddress, string telephoneNumber, string 
+drivingLicenseNumber) {
+ this->name = name;
+ this->rollNumber = rollNumber;
+ this->className = className;
+ this->division = division;
+ this->dateOfBirth = dateOfBirth;
+ this->bloodGroup = bloodGroup;
+ this->contactAddress = contactAddress;
+ this->telephoneNumber = telephoneNumber;
+ this->drivingLicenseNumber = drivingLicenseNumber;
+}
+
+ Student(const Student& student) {
+
+ this->name = student.name;
+
+ this->rollNumber = student.rollNumber;
+
+ this->className = student.className;
+
+ this->division = student.division;
+
+ this->dateOfBirth = student.dateOfBirth;
+
+ this->bloodGroup = student.bloodGroup;
+
+ this->contactAddress = student.contactAddress;
+
+ this->telephoneNumber = student.telephoneNumber;
+
+ this->drivingLicenseNumber = student.drivingLicenseNumber;
+
+ }
+
+ ~Student() {
+
+ cout << "Destructor called for student " << name << endl;
+
+ }
+
+ static int getStudentCount() {
+
+ return studentCount;
+
+ }
+
+ friend ostream& operator<<(ostream& os, const Student& student) {
+
+ os << "Name: " << student.name << endl;
+
+ os << "Roll Number: " << student.rollNumber << endl;
+
+ os << "Class: " << student.className << endl;
+
+ os << "Division: " << student.division << endl;
+
+ os << "Date of Birth: " << student.dateOfBirth << endl;
+
+ os << "Blood Group: " << student.bloodGroup << endl;
+
+ os << "Contact Address: " << student.contactAddress << endl;
+
+ os << "Telephone Number: " << student.telephoneNumber << endl;
+
+ os << "Driving License Number: " << student.drivingLicenseNumber << endl;
+
+ return os;
+
+ }
+
+ inline void displayStudentInfo() {
+
+ cout << *this;
+}
+
+ void allocateMemory() {
+
+ string* tempName = new string(name);
+
+ int* tempRollNumber = new int(rollNumber);
+
+ delete tempName;
+
+ delete tempRollNumber;
+
+ }
+
+ void validateStudentInfo() {
+
+ if (rollNumber <= 0) {
+
+ throw invalid_argument("Roll number must be greater than zero.");
+
+ }
+
+ if (className.empty()) {
+
+ throw invalid_argument("Class cannot be empty.");
+
+ }
+
+ }
+
+private:
+
+ static int studentCount;
+
+};
+
+int Student::studentCount = 0;
+
+int main() {
+
+ try {
+
+ Student student1("pranita", 77, "SE", "A", "10/09/2003", "O+", "Maharashtra", 
+
+"1234567890", "DL123456");
+
+ student1.displayStudentInfo();
+
+ student1.allocateMemory();
+
+ student1.validateStudentInfo();
+
+ Student student2(student1); // Copy Constructor
+
+ student2.displayStudentInfo();
+
+ cout << "Student count: " << Student::getStudentCount() << endl;
+
+ } catch (const exception& e) {
+
+ cerr << "Error: " << e.what() << endl;
+
+ }
+return 0;
+
+}
