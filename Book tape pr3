@@ -1,0 +1,149 @@
+#include <iostream>
+
+#include <string>
+
+#include <stdexcept>
+
+class Publication {
+
+protected:
+
+ std::string title;
+
+ float price;
+
+public:
+
+ Publication() : title(""), price(0.0) {}
+
+ void input() {
+
+ std::cout << "Enter title: ";
+
+ std::getline(std::cin, title);
+
+ std::cout << "Enter price: ";
+
+ std::cin >> price;
+
+ if (price < 0) {
+
+ throw std::invalid_argument("Price cannot be negative.");
+
+ }
+
+ }
+
+ void display() const {
+
+ std::cout << "Title: " << title << "\nPrice: " << price << std::endl;
+
+ }
+
+};
+
+class Book : public Publication {
+
+private:
+
+ int pageCount;
+
+public:
+
+ Book() : pageCount(0) {}
+
+ void input() {
+
+ Publication::input();
+
+ std::cout << "Enter page count: ";
+std::cin >> pageCount;
+
+ if (pageCount < 0) {
+
+ throw std::invalid_argument("Page count cannot be negative.");
+
+ }
+
+ }
+
+ void display() const {
+
+ Publication::display();
+
+ std::cout << "Page Count: " << pageCount << std::endl;
+
+ }
+
+};
+
+class Tape : public Publication {
+
+private:
+
+ float playingTime;
+
+public:
+
+ Tape() : playingTime(0.0) {}
+
+ void input() {
+
+ Publication::input();
+
+ std::cout << "Enter playing time (in minutes): ";
+
+ std::cin >> playingTime;
+
+ if (playingTime < 0) {
+
+ throw std::invalid_argument("Playing time cannot be negative.");
+
+ }
+
+ }
+
+ void display() const {
+
+ Publication::display();
+
+ std::cout << "Playing Time: " << playingTime << " minutes" << std::endl;
+
+ }
+
+};
+
+int main() {
+
+ Book book;
+
+ Tape tape;
+
+ try {
+std::cout << "Enter details for the book:\n";
+
+ book.input(); 
+
+ std::cout << "\nEnter details for the tape:\n";
+
+ tape.input();
+
+ } catch (const std::exception& e) {
+
+ std::cerr << "Error: " << e.what() << std::endl;
+
+ book = Book(); // Reset book
+
+ tape = Tape(); // Reset tape
+
+ }
+
+ std::cout << "\nBook Details:\n";
+
+ book.display();
+
+ std::cout << "\nTape Details:\n";
+
+ tape.display();
+
+ return 0; // Exit successfully
